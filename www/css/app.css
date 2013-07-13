@@ -336,6 +336,19 @@ header {
   header h2 {
     font-size: 1em; }
 
+span.mirror {
+  -moz-transform: scaleX(-1);
+  /* Gecko */
+  -o-transform: scaleX(-1);
+  /* Operah */
+  -webkit-transform: scaleX(-1);
+  /* webkit */
+  transform: scaleX(-1);
+  /* standard */
+  filter: FlipH;
+  /* IE 6/7/8 */
+  display: inline-block; }
+
 div#haahwaaw {
   width: 100%;
   max-width: 978px;
@@ -345,7 +358,7 @@ div#haahwaaw {
     height: 30px;
     border: solid 1px black;
     border-bottom: none;
-    margin: 0 auto; }
+    margin: 2em auto 0 auto; }
     div#haahwaaw .options ul {
       list-style: none;
       margin: 0;
@@ -357,25 +370,77 @@ div#haahwaaw {
         float: left;
         line-height: 30px;
         text-align: center;
-        border-right: solid 1px black; }
+        border-right: solid 1px black;
+        transition: all .2s ease-in-out; }
         div#haahwaaw .options ul li:last-child {
           border-right: none; }
+        div#haahwaaw .options ul li.active {
+          font-weight: bold; }
+        div#haahwaaw .options ul li:hover {
+          background-color: #F1E3D5; }
+  div#haahwaaw .uploader {
+    background-color: #FBF6F4;
+    z-index: 15;
+    position: relative;
+    border: solid 1px black;
+    height: 325px;
+    margin: 2em 0 0 0; }
+    div#haahwaaw .uploader input[type=file] {
+      display: none; }
+    div#haahwaaw .uploader .prompt, div#haahwaaw .uploader .confirm {
+      width: 50%;
+      text-align: center;
+      font-size: 1.5em;
+      margin: 0 auto; }
+    div#haahwaaw .uploader .prompt {
+      position: relative;
+      top: 50%;
+      height: 3em;
+      margin: -1.5em auto 0 auto; }
+    div#haahwaaw .uploader .confirm {
+      margin: 1em auto 0 auto; }
+      div#haahwaaw .uploader .confirm img {
+        margin: 0 auto;
+        width: auto;
+        height: 250px; }
+      div#haahwaaw .uploader .confirm span {
+        display: block; }
+  div#haahwaaw .confirm.hidden, div#haahwaaw .prompt.hidden, div#haahwaaw .pictureframe.hidden, div#haahwaaw .options.hidden {
+    display: none; }
+  div#haahwaaw .uploader_confirm {
+    z-index: 14;
+    position: relative;
+    width: 202px;
+    height: 30px;
+    border: solid 1px black;
+    border-top: none;
+    margin: 0 auto;
+    transition: margin-top .2s ease-in-out; }
+    div#haahwaaw .uploader_confirm ul {
+      list-style: none;
+      margin: 0;
+      padding: 0; }
+      div#haahwaaw .uploader_confirm ul li {
+        height: 30px;
+        width: 100px;
+        display: block;
+        float: left;
+        line-height: 30px;
+        text-align: center;
+        border-right: solid 1px black;
+        transition: all .2s ease-in-out; }
+        div#haahwaaw .uploader_confirm ul li:last-child {
+          border-right: none; }
+        div#haahwaaw .uploader_confirm ul li.active {
+          font-weight: bold; }
+        div#haahwaaw .uploader_confirm ul li:hover {
+          background-color: #F1E3D5; }
+  div#haahwaaw .uploader_confirm.hidden {
+    margin-top: -31px; }
   div#haahwaaw .pictureframe {
     border: solid 1px black; }
   div#haahwaaw canvas {
-    border: solid 1px red; }
-
-/*
- ul
-    @include span-columns(8 omega,10)
-    list-style: none
-    line-height: 50px
-    margin: 0
-    padding: 0
-    li
-      display: inline-block
-      margin: 0 2px
-      padding: 0 13px
-      height: 50px
-      background-color: red
-*/
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: auto; }

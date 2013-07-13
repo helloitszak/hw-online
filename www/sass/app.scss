@@ -27,6 +27,16 @@ header {
 	}
 }
 
+span.mirror {
+	-moz-transform: scaleX(-1); /* Gecko */
+	-o-transform: scaleX(-1); /* Operah */
+	-webkit-transform: scaleX(-1); /* webkit */
+	transform: scaleX(-1); /* standard */
+	filter: FlipH; /* IE 6/7/8 */
+
+	display: inline-block;
+}
+
 div#haahwaaw {
 	width: 100%;
 	max-width: 978px;
@@ -37,7 +47,7 @@ div#haahwaaw {
 		height: 30px;
 		border: solid 1px black;
 		border-bottom: none;
-		margin: 0 auto;
+		margin: 2em auto 0 auto;
 
 		ul {
 			list-style: none;
@@ -54,13 +64,120 @@ div#haahwaaw {
 
 				border-right: solid 1px black;
 
+				transition: all .2s ease-in-out;
+
 				&:last-child
 				{
 					border-right: none;
 				}
 
+				&.active
+				{
+					font-weight: bold;
+				}
+
+				&:hover
+				{
+					background-color: #F1E3D5;
+				}
+
 			}
 		}
+	}
+
+	.uploader {
+		background-color: #FBF6F4;
+		z-index: 15;
+		position: relative;
+		border: solid 1px black;
+		height: 325px;
+		margin: 2em 0 0 0;
+
+		input[type=file] {
+			display: none;
+		}
+
+		.prompt, .confirm {
+			width: 50%;
+			text-align: center;
+			font-size: 1.5em;
+			margin: 0 auto;
+		}
+
+		.prompt {
+			position: relative;
+			top: 50%;
+			height: 3em;
+			margin: -1.5em auto 0 auto;
+		}
+
+		.confirm {
+			margin: 1em auto 0 auto;
+			img {
+				margin: 0 auto;
+				width: auto;
+				height: 250px;
+			}
+			span {
+				display: block;
+			}
+		}
+
+
+	}
+
+	.confirm.hidden, .prompt.hidden, .pictureframe.hidden, .options.hidden {
+		display: none;
+	}
+
+	.uploader_confirm {
+		z-index: 14;
+		position: relative;
+		width: 202px;
+		height: 30px;
+		border: solid 1px black;
+		border-top: none;
+		margin: 0 auto;
+
+		transition: margin-top .2s ease-in-out;
+
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				height: 30px;
+				width: 100px;
+				display: block;
+				float: left;
+				line-height: 30px;
+				text-align: center;
+
+				border-right: solid 1px black;
+
+				transition: all .2s ease-in-out;
+
+				&:last-child
+				{
+					border-right: none;
+				}
+
+				&.active
+				{
+					font-weight: bold;
+				}
+				&:hover
+				{
+					background-color: #F1E3D5;
+				}
+
+			}
+		}
+	}
+
+	.uploader_confirm.hidden {
+		margin-top: -31px;
 	}
 
 	.pictureframe {
@@ -68,6 +185,9 @@ div#haahwaaw {
 	}
 
 	canvas {
-		border: solid 1px red;
+		display: block;
+		margin: 0 auto;
+		width: 100%;
+		height: auto;
 	}
 }

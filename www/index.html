@@ -7,19 +7,39 @@
 </head>
 <body>
 	<header>
-		<h1>HaaH WaaW</h1>
+		<h1>Ha<span class="mirror">Ha</span> Wa<span class="mirror">Wa</span></h1>
 		<h2>Online</h2>
 	</header>
 
 	<div id="haahwaaw">
-		<div class="options">
+		<div class="uploader">
+			<input type="file" accept="image/*" id="fileinput">
+			<div class="prompt">
+				<span>
+					Drag your image here to upload or click to browse your computer.
+				</span>
+			</div>
+			<div class="confirm hidden">
+				<img>
+				<span>
+				</span>
+			</div>
+		</div>
+		<div class="uploader_confirm hidden">
 			<ul>
+				<li data-action="cancel">Cancel</li>
+				<li data-action="confirm">Confirm</li>
+			</ul>
+		</div>
+
+		<div class="options hidden">
+			<ul id="opt-direction">
 				<li data-type="normal">Normal</li>
 				<li data-type="ltr">Left to Right</li>
 				<li data-type="rtl">Right to Left</li>
 			</ul>
 		</div>
-		<div class="pictureframe">
+		<div class="pictureframe hidden">
 			<canvas>
 			</canvas>
 		</div>
