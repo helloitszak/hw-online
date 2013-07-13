@@ -1,0 +1,73 @@
+// Normalize everything!
+@import "normalize.scss/normalize";
+
+// Web Fonts!
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+// accent = F1E3D5
+
+body {
+	background-color: #FBF6F4;
+	color: #444;
+	font-size: 100%;
+	font-family: 'Open Sans', sans-serif;
+}
+
+header {
+	margin: 0.2em;
+	padding: 0 auto 0 auto;
+	text-align: center;
+	font-size: 3em;
+	font-weight: bold;
+	h1, h2 {
+		margin: 0;
+	}
+	h2 {
+		font-size: 1em;
+	}
+}
+
+div#haahwaaw {
+	width: 100%;
+	max-width: 978px;
+	margin: 0 auto;
+
+	.options {
+		width: 303px;
+		height: 30px;
+		border: solid 1px black;
+		border-bottom: none;
+		margin: 0 auto;
+
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				height: 30px;
+				width: 100px;
+				display: block;
+				float: left;
+				line-height: 30px;
+				text-align: center;
+
+				border-right: solid 1px black;
+
+				&:last-child
+				{
+					border-right: none;
+				}
+
+			}
+		}
+	}
+
+	.pictureframe {
+		border: solid 1px black;
+	}
+
+	canvas {
+		border: solid 1px red;
+	}
+}
