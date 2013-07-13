@@ -24,6 +24,13 @@ define([
 			this.$direction = this.$("#opt-direction");
 			this.$fileinput = this.$("#fileinput")[0]; 
 
+			this.$options = this.$(".options");
+			this.$pictureframe = this.$(".pictureframe");
+			this.$uploader = this.$(".uploader");
+			this.$uploader_confirm = this.$(".uploader_confirm");
+
+			this.$previewpic = this.$(".uploader .confirm img")[0];
+
 			this.listenTo(this.picture, 'change', this.render);
 
 			this.render();
@@ -37,52 +44,82 @@ define([
 				.filter('[data-type="' + this.picture.get("direction") + '"]')
 				.addClass("active");
 
-			// update the canvas
-			if (this.picture.get("src")) {
-				var image = new Image();
-				var direction = this.picture.get("direction");
+			//this.$previewpic.src = null;
+			this.$previewpic.src = this.picture.get("previewpic");
 
-				$(image).load(function() {
-					// remember, in this function
-					// "this" is the image
+			// decide on if we are displaying the image or the uploader
+			if (this.picture.get("displaying")) {
+				this.$pictureframe.show();
+				this.$options.show();
+				this.$uploader.hide();
+				this.$uploader_confirm.hide();
 
-					var canvas = $(".pictureframe canvas")[0];
-					canvas.height = this.height;
-					canvas.width = this.width;
-					var ctx = canvas.getContext("2d");
-					ctx.drawImage(this, 0, 0);
-					
 
-					// BEGIN THE PAIN			
-					if (direction != "normal")
-					{
-						var imageData = ctx.getImageData(0,0,this.width, this.height);
-						var rawData = imageData.data;
+				// update the canvas
+				if (this.picture.get("src")) {
+					var image = new Image();
+					var direction = this.picture.get("direction");
 
-						for (var y = 0; y < this.height; y++) {
-							var cols = [] 
-							for (var x = 0; x < this.width; x++) {
-								cols[x] = Flipper.getRgbaData(rawData, this.width, x, y);
+					$(image).load(function() {
+						// remember, in this function
+						// "this" is the image
+
+						var canvas = $(".pictureframe canvas")[0];
+						canvas.height = this.height;
+						canvas.width = this.width;
+						var ctx = canvas.getContext("2d");
+						ctx.drawImage(this, 0, 0);
+						
+
+						// BEGIN THE PAIN			
+						if (direction != "normal")
+						{
+							var imageData = ctx.getImageData(0,0,this.width, this.height);
+							var rawData = imageData.data;
+
+							for (var y = 0; y < this.height; y++) {
+								var cols = [] 
+								for (var x = 0; x < this.width; x++) {
+									cols[x] = Flipper.getRgbaData(rawData, this.width, x, y);
+								}
+
+								if (direction == "ltr")
+									cols = Flipper.mirrorLeftToRight(cols);
+								else if (direction == "rtl")
+									cols = Flipper.mirrorRightToLeft(cols);
+
+								var width = this.width;
+								_.each(cols, function(value, key, list) {
+									Flipper.setRgbaData(rawData, width, key, y, value);
+								});
 							}
 
-							if (direction == "ltr")
-								cols = Flipper.mirrorLeftToRight(cols);
-							else if (direction == "rtl")
-								cols = Flipper.mirrorRightToLeft(cols);
-
-							var width = this.width;
-							_.each(cols, function(value, key, list) {
-								Flipper.setRgbaData(rawData, width, key, y, value);
-							});
+							ctx.putImageData(imageData, 0, 0);
 						}
 
-						ctx.putImageData(imageData, 0, 0);
-					}
+					});
 
-				});
+					image.src = this.picture.get("src");
+				}
 
-				image.src = this.picture.get("src");
+			} else {
+				this.$pictureframe.hide();
+				this.$options.hide();
+				this.$uploader.show();
+
+				// if preview picture is set, we are in confirm mode
+				if (this.$previewpic.src) {
+					$(".uploader .prompt").addClass("hidden");
+					$(".uploader .confirm").removeClass("hidden");			
+					$(".uploader_confirm").removeClass("hidden");
+				} else {
+					$(".uploader .prompt").removeClass("hidden");
+					$(".uploader .confirm").addClass("hidden");
+					$(".uploader_confirm").addClass("hidden");
+				}
 			}
+
+
 		},
 
 		changeDirection: function(ev) {
@@ -90,7 +127,7 @@ define([
 		},
 
 		openFileInput: function(ev) {
-			if ($(".uploader .confirm img")[0].src == "") {
+			if (!this.picture.get("previewpic")) {
 				this.$fileinput.click();
 			}
 		},
@@ -98,44 +135,32 @@ define([
 		fileSelected: function(ev) {
 			if (ev.currentTarget.value == "") return;
 			$(".uploader .confirm span").text($.dirBaseName(ev.currentTarget.value));
-			$(".uploader .prompt").addClass("hidden");
-			$(".uploader .confirm").removeClass("hidden");			
-			$(".uploader_confirm").removeClass("hidden");
-			// set some kinda pinwheel spinner loading thingy on the img.
+
+			// TODO: set some kinda pinwheel spinner loading thingy on the img.
 
 			var reader = new FileReader();
-			var image = $(".uploader .confirm img")[0];
 			var file = ev.currentTarget.files[0];
 
-			image.file = file;
-
-
-			reader.onload = function(e) {				
-				image.src = e.target.result;
+			// fuck javascript
+			var self = this;
+			var setPreview = function(e) {
+				self.picture.set("previewpic", e.target.result);
 			};
+			reader.onload = setPreview;
 
 			reader.readAsDataURL(file);
 			ev.currentTarget.value = null;
 		},
 
 		submitSelection: function() {
-			this.picture.set("src", $(".uploader .confirm img")[0].src);
-			$(".uploader").hide();
-			$(".uploader_confirm").hide();
-
-			// TODO: Move this logic into the rendering function
-			$(".options").removeClass("hidden");
-			$(".pictureframe").removeClass("hidden");
-
+			this.picture.set("src", this.picture.get("previewpic"));
+			this.picture.set("displaying", true);
 		},
 
 		cancelSelection: function() {
-			$(".uploader .prompt").removeClass("hidden");
-			$(".uploader .confirm").addClass("hidden");
-			$(".uploader_confirm").addClass("hidden");
-			$(".uploader .confirm img")[0].src = null;
 			$(".uploader .confirm span").text("");
-			this.picture.src = null;
+			this.picture.set("previewpic", null);
+			this.picture.set("src", null);
 		},
 
 		uploaderAction: function(ev) {

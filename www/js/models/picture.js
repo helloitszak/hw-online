@@ -7,7 +7,9 @@ define([
 
 	var PictureModel = Backbone.Model.extend({
 		defaults: {
-			direction: "normal"
+			direction: "normal",
+			displaying: false,
+			previewpic: null
 		}
 	});
 
