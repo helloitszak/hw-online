@@ -16,7 +16,8 @@
 			<input type="file" accept="image/*" id="fileinput">
 			<div class="prompt">
 				<span>
-					Drag your image here to upload or click to browse your computer.
+					Drag your image here to upload<br>
+					or click to browse your computer.
 				</span>
 			</div>
 			<div class="confirm hidden">
@@ -40,8 +41,16 @@
 			</ul>
 		</div>
 		<div class="pictureframe hidden">
-			<canvas>
-			</canvas>
+			<div class="border">
+				<canvas>
+				</canvas>
+			</div>
+		</div>
+		<div class="picturecancel">
+			<ul>
+				<a href="#" id="renderedlink"><li>Save PNG</li></a>
+				<li id="startoverbtn">Start Over</li>
+			</ul>
 		</div>
 	</div>
 

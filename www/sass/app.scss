@@ -11,6 +11,8 @@ body {
 	color: #444;
 	font-size: 100%;
 	font-family: 'Open Sans', sans-serif;
+
+	min-width: 400px;
 }
 
 header {
@@ -98,7 +100,6 @@ div#haahwaaw {
 		}
 
 		.prompt, .confirm {
-			width: 50%;
 			text-align: center;
 			font-size: 1.5em;
 			margin: 0 auto;
@@ -107,8 +108,9 @@ div#haahwaaw {
 		.prompt {
 			position: relative;
 			top: 50%;
-			height: 3em;
-			margin: -1.5em auto 0 auto;
+			height: 2em;
+			width: 90%;
+			margin: -1em auto 0 auto;
 		}
 
 		.confirm {
@@ -117,12 +119,12 @@ div#haahwaaw {
 				margin: 0 auto;
 				width: auto;
 				height: 250px;
+				max-width: 100%;
 			}
 			span {
 				display: block;
 			}
 		}
-
 
 	}
 
@@ -133,10 +135,9 @@ div#haahwaaw {
 	.uploader_confirm {
 		z-index: 14;
 		position: relative;
-		width: 202px;
+		width: 201px;
 		height: 30px;
 		border: solid 1px black;
-		border-top: none;
 		margin: 0 auto;
 
 		transition: margin-top .2s ease-in-out;
@@ -176,18 +177,65 @@ div#haahwaaw {
 		}
 	}
 
-	.uploader_confirm.hidden {
-		margin-top: -31px;
+	.uploader_confirm {
+		border-top: none;
 	}
 
-	.pictureframe {
-		border: solid 1px black;
+	.uploader_confirm.hidden {
+		margin-top: -31px;
 	}
 
 	canvas {
 		display: block;
 		margin: 0 auto;
 		width: 100%;
+		min-width: 305px;
+		max-width: 100%;
 		height: auto;
+	}
+
+	.picturecancel {
+		width: 201px;
+		height: 30px;
+		border: solid 1px black;
+		border-top: none;
+		margin: 0 auto 2em auto;
+
+		a {
+			color: inherit;
+		}
+
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				height: 30px;
+				width: 100px;
+				display: block;
+				float: left;
+				line-height: 30px;
+				text-align: center;
+
+				border-left: solid 1px black;
+
+				transition: all .2s ease-in-out;
+
+				&:first-child
+				{
+					border-left: none;
+				}
+				&:hover
+				{
+					background-color: #F1E3D5;
+				}
+
+			}
+		}
+	}
+
+	ul li {
+		cursor: pointer;
 	}
 }
