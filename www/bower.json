@@ -1,0 +1,11 @@
+{
+  "name": "hwonline",
+  "version": "1.0.0",
+  "dependencies": {
+    "backbone": "~1.0.0",
+    "jquery": "~2.0.3",
+    "normalize.scss": "~2.1.2",
+    "requirejs": "~2.1.8",
+    "underscore": "~1.5.1"
+  }
+}
