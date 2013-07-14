@@ -407,7 +407,7 @@ div#haahwaaw {
         max-width: 100%; }
       div#haahwaaw .uploader .confirm span {
         display: block; }
-  div#haahwaaw .confirm.hidden, div#haahwaaw .prompt.hidden, div#haahwaaw .pictureframe.hidden, div#haahwaaw .options.hidden {
+  div#haahwaaw .confirm.hidden, div#haahwaaw .prompt.hidden, div#haahwaaw .pictureframe.hidden, div#haahwaaw .options.hidden, div#haahwaaw .picturecancel.hidden {
     display: none; }
   div#haahwaaw .uploader_confirm {
     z-index: 14;

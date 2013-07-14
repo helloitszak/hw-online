@@ -128,7 +128,9 @@ div#haahwaaw {
 
 	}
 
-	.confirm.hidden, .prompt.hidden, .pictureframe.hidden, .options.hidden {
+	.confirm.hidden, .prompt.hidden, 
+	.pictureframe.hidden, .options.hidden,
+	.picturecancel.hidden {
 		display: none;
 	}
 
