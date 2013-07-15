@@ -37,8 +37,6 @@ define([
 			this.$uploader_confirm = this.$(".uploader_confirm");
 			this.$picturecancel = this.$(".picturecancel");
 
-			this.$previewpic = this.$(".uploader .confirm img")[0];
-
 			this.listenTo(this.picture, 'change', this.render);
 
 			//DEBUG CODE
@@ -58,7 +56,11 @@ define([
 				.addClass("active");
 
 			//this.$previewpic.src = null;
-			this.$previewpic.src = this.picture.get("previewpic");
+			this.$(".uploader .confirm img").remove();
+			if (this.picture.get("previewpic") !== "") {
+				$("<img />", {src: this.picture.get("previewpic")}).prependTo(this.$uploader.children(".confirm"));
+			}
+			
 
 			// decide on if we are displaying the image or the uploader
 			if (this.picture.get("displaying")) {
@@ -134,7 +136,7 @@ define([
 				this.$uploader_confirm.show();
 
 				// if preview picture is set, we are in confirm mode
-				if (this.$previewpic.src) {
+				if (this.picture.get("previewpic") !== "") {
 					$(".uploader .prompt").addClass("hidden");
 					$(".uploader .confirm").removeClass("hidden");			
 					$(".uploader_confirm").removeClass("hidden");
@@ -151,7 +153,7 @@ define([
 		},
 
 		openFileInput: function(ev) {
-			if (!this.picture.get("previewpic")) {
+			if (this.picture.get("previewpic") == "") {
 				this.$fileinput.click();
 			}
 		},
@@ -173,7 +175,7 @@ define([
 
 		cancelSelection: function() {
 			$(".uploader .confirm span").text("");
-			this.picture.set("previewpic", null);
+			this.picture.set("previewpic", "");
 			this.picture.set("src", null);
 		},
 
@@ -188,13 +190,13 @@ define([
 
 		startOver: function(ev) {
 			$(".uploader .confirm span").text("");
-			this.picture.set("previewpic", null);
+			this.picture.set("previewpic", "");
 			this.picture.set("src", null);
 			this.picture.set("displaying", false);
 		},
 
 		fileEnter: function(ev) {
-			if (!this.$previewpic.src) {
+			if (this.picture.get("previewpic") == "") {
 				$(".uploader").addClass("draghover");
 				ev.stopPropagation();
 				ev.preventDefault();
@@ -202,7 +204,7 @@ define([
 		},
 
 		fileLeave: function(ev) {
-			if (!this.$previewpic.src) {
+			if (this.picture.get("previewpic") == "") {
 				$(".uploader").removeClass("draghover");
 				ev.stopPropagation();
 				ev.preventDefault();
@@ -210,7 +212,7 @@ define([
 		},
 
 		fileDrop: function(ev) {
-			if (!this.$previewpic.src) {
+			if (this.picture.get("previewpic") == "") {
 				ev.stopPropagation();
 				ev.preventDefault();
 

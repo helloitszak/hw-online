@@ -9,7 +9,7 @@ define([
 		defaults: {
 			direction: "normal",
 			displaying: false,
-			previewpic: null
+			previewpic: ""
 		}
 	});
 
