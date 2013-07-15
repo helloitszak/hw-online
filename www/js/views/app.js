@@ -27,7 +27,7 @@ define([
 		},
 
 		initialize: function() {
-			this.picture = new Picture;
+			this.picture = new Picture();
 			this.$direction = this.$("#opt-direction");
 			this.$fileinput = this.$("#fileinput")[0]; 
 
@@ -91,26 +91,29 @@ define([
 						
 
 						// BEGIN THE PAIN			
-						if (direction != "normal")
+						if (direction !== "normal")
 						{
 							var imageData = ctx.getImageData(0,0,this.width, this.height);
 							var rawData = imageData.data;
 
+							var updateRgba = function(value, key, list) {
+								Flipper.setRgbaData(rawData, width, key, y, value);
+							};
+
 							for (var y = 0; y < this.height; y++) {
-								var cols = [] 
+								var cols = [];
 								for (var x = 0; x < this.width; x++) {
 									cols[x] = Flipper.getRgbaData(rawData, this.width, x, y);
 								}
 
-								if (direction == "ltr")
+								if (direction === "ltr") {
 									cols = Flipper.mirrorLeftToRight(cols);
-								else if (direction == "rtl")
+								} else if (direction === "rtl") {
 									cols = Flipper.mirrorRightToLeft(cols);
+								}
 
 								var width = this.width;
-								_.each(cols, function(value, key, list) {
-									Flipper.setRgbaData(rawData, width, key, y, value);
-								});
+								_.each(cols, updateRgba);
 							}
 
 							ctx.putImageData(imageData, 0, 0);
@@ -154,7 +157,9 @@ define([
 		},
 
 		fileSelected: function(ev) {
-			if (ev.currentTarget.value == "") return;
+			if (ev.currentTarget.value === "") {
+				return;	
+			} 
 
 			this.handleFile(ev.currentTarget.files[0]);
 
@@ -174,9 +179,9 @@ define([
 
 		uploaderAction: function(ev) {
 			var action = $(ev.currentTarget).data("action");
-			if (action == "cancel") {
+			if (action === "cancel") {
 				this.cancelSelection();
-			} else  if (action == "confirm") {
+			} else  if (action === "confirm") {
 				this.submitSelection();
 			}
 		},
@@ -239,8 +244,8 @@ define([
 			reader.readAsDataURL(file);
 		},
 
-		displayError: function(error) {
-			var error = $("<div/>", {class: "error", text: error});
+		displayError: function(errortxt) {
+			var error = $("<div/>", {class: "error", text: errortxt});
 			error.delay(1000).fadeOut(400, function() {
 				this.remove();	
 			});
