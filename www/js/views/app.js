@@ -15,9 +15,15 @@ define([
 		events: {
 			"click #opt-direction li": "changeDirection",
 			"click .uploader": "openFileInput",
+			"dragenter .uploader": "fileEnter",
+			"mouseover .uploader": "fileEnter",
+			"dragleave .uploader": "fileLeave",
+			"mouseout .uploader": "fileLeave",
+			"dragover .uploader": "fileEnter",
+			"drop .uploader": "fileDrop",
 			"change #fileinput": "fileSelected",
 			"click .uploader_confirm ul li": "uploaderAction",
-			"click #startoverbtn": "startOver"
+			"click #startoverbtn": "startOver",
 		},
 
 		initialize: function() {
@@ -149,21 +155,9 @@ define([
 
 		fileSelected: function(ev) {
 			if (ev.currentTarget.value == "") return;
-			$(".uploader .confirm span").text($.dirBaseName(ev.currentTarget.value));
 
-			// TODO: set some kinda pinwheel spinner loading thingy on the img.
+			this.handleFile(ev.currentTarget.files[0]);
 
-			var reader = new FileReader();
-			var file = ev.currentTarget.files[0];
-
-			// fuck javascript
-			var self = this;
-			var setPreview = function(e) {
-				self.picture.set("previewpic", e.target.result);
-			};
-			reader.onload = setPreview;
-
-			reader.readAsDataURL(file);
 			ev.currentTarget.value = null;
 		},
 
@@ -186,11 +180,71 @@ define([
 				this.submitSelection();
 			}
 		},
+
 		startOver: function(ev) {
 			$(".uploader .confirm span").text("");
 			this.picture.set("previewpic", null);
 			this.picture.set("src", null);
 			this.picture.set("displaying", false);
+		},
+
+		fileEnter: function(ev) {
+			if (!this.$previewpic.src) {
+				$(".uploader").addClass("draghover");
+				ev.stopPropagation();
+				ev.preventDefault();
+			}
+		},
+
+		fileLeave: function(ev) {
+			if (!this.$previewpic.src) {
+				$(".uploader").removeClass("draghover");
+				ev.stopPropagation();
+				ev.preventDefault();
+			}
+		},
+
+		fileDrop: function(ev) {
+			if (!this.$previewpic.src) {
+				ev.stopPropagation();
+				ev.preventDefault();
+
+				$(".uploader").removeClass("draghover");
+
+				var dt = ev.originalEvent.dataTransfer;
+				this.handleFile(dt.files[0]);
+			}
+		},
+
+
+		handleFile: function(file)  {
+
+			var imageType = /image.*/;
+
+			if (!file.type.match(imageType)) {
+				this.displayError("This is not an image!");
+				return;
+			}
+
+			$(".uploader .confirm span").text(file.name);
+			
+			var reader = new FileReader();
+			// fuck javascript
+			var self = this;
+			var setPreview = function(e) {
+				self.picture.set("previewpic", e.target.result);
+			};
+			reader.onload = setPreview;
+
+			reader.readAsDataURL(file);
+		},
+
+		displayError: function(error) {
+			var error = $("<div/>", {class: "error", text: error});
+			error.delay(1000).fadeOut(400, function() {
+				this.remove();	
+			});
+			error.prependTo(this.$el);
 		}
 	});
 

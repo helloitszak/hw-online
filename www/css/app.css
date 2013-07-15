@@ -370,6 +370,16 @@ div#haahwaaw {
   width: 100%;
   max-width: 978px;
   margin: 0 auto; }
+  div#haahwaaw .error {
+    width: 100%;
+    height: 1em;
+    background-color: #F1E3D5;
+    text-align: center;
+    padding: 1em 0;
+    border: solid 1px red;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 0 10px rgba(255, 0, 0, 0.3);
+    font-weight: bold;
+    margin: 1em 0; }
   div#haahwaaw .options {
     width: 303px;
     height: 30px;
@@ -426,6 +436,8 @@ div#haahwaaw {
         max-width: 100%; }
       div#haahwaaw .uploader .confirm span {
         display: block; }
+  div#haahwaaw .uploader.draghover {
+    background-color: #F1E3D5; }
   div#haahwaaw .confirm.hidden, div#haahwaaw .prompt.hidden, div#haahwaaw .pictureframe.hidden, div#haahwaaw .options.hidden, div#haahwaaw .picturecancel.hidden {
     display: none; }
   div#haahwaaw .uploader_confirm {
@@ -471,7 +483,8 @@ div#haahwaaw {
     width: 100%;
     min-width: 305px;
     max-width: 100%;
-    height: auto; }
+    height: auto;
+    border: solid 1px black; }
   div#haahwaaw .picturecancel {
     width: 201px;
     height: 30px;
