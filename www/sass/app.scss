@@ -29,6 +29,25 @@ header {
 	}
 }
 
+footer {
+	height: 1.1em;
+	width: 100%;
+	margin: 3em 0 0 0;
+	text-align: center;
+	a {
+		color: #c00;
+		text-decoration: none;
+		border-bottom: solid 1px #eee;
+		-webkit-transition: all .2s ease-in-out;
+		-moz-transition: all .2s ease-in-out;
+		-o-transition: all .2s ease-in-out;
+		transition: all .2s ease-in-out;
+	}
+	a:hover {
+		color: #63159B;
+	}
+}
+
 span.mirror {
 	-moz-transform: scaleX(-1); /* Gecko */
 	-o-transform: scaleX(-1); /* Operah */
@@ -66,6 +85,9 @@ div#haahwaaw {
 
 				border-right: solid 1px black;
 
+				-webkit-transition: all .2s ease-in-out;
+				-moz-transition: all .2s ease-in-out;
+				-o-transition: all .2s ease-in-out;
 				transition: all .2s ease-in-out;
 
 				&:last-child
@@ -142,6 +164,9 @@ div#haahwaaw {
 		border: solid 1px black;
 		margin: 0 auto;
 
+		-webkit-transition: margin-top .2s ease-in-out;
+		-moz-transition: margin-top .2s ease-in-out;
+		-o-transition: margin-top .2s ease-in-out;
 		transition: margin-top .2s ease-in-out;
 
 		ul {
@@ -159,6 +184,9 @@ div#haahwaaw {
 
 				border-right: solid 1px black;
 
+				-webkit-transition: all .2s ease-in-out;
+				-moz-transition: all .2s ease-in-out;
+				-o-transition: all .2s ease-in-out;
 				transition: all .2s ease-in-out;
 
 				&:last-child
@@ -223,6 +251,9 @@ div#haahwaaw {
 
 				border-left: solid 1px black;
 
+				-webkit-transition: all .2s ease-in-out;
+				-moz-transition: all .2s ease-in-out;
+				-o-transition: all .2s ease-in-out;
 				transition: all .2s ease-in-out;
 
 				&:first-child
