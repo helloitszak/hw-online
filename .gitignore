@@ -12,6 +12,7 @@ logs
 results
 
 www/css
+www-built
 
 npm-debug.log
 node_modules
